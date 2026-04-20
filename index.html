@@ -539,29 +539,23 @@ function getPos(e){
 function draw(x,y){
   dctx.lineCap='round'; dctx.lineJoin='round';
   if(currentBrushType==='pen'){
-    let color=currentColor;
-    if(currentPalette==='rainbow'){rainbowAngle=(rainbowAngle+3)%360;color=`hsl(${rainbowAngle},100%,55%)`;}
     dctx.globalAlpha=1; dctx.globalCompositeOperation='source-over';
-    dctx.strokeStyle=color; dctx.lineWidth=currentBrushSize;
+    dctx.strokeStyle=currentColor; dctx.lineWidth=currentBrushSize;
     dctx.beginPath();dctx.moveTo(lastX,lastY);dctx.lineTo(x,y);dctx.stroke();
   } else if(currentBrushType==='marker'){
-    let color=currentColor;
-    if(currentPalette==='rainbow'){rainbowAngle=(rainbowAngle+2)%360;color=`hsl(${rainbowAngle},100%,60%)`;}
     dctx.globalAlpha=0.35; dctx.globalCompositeOperation='source-over';
-    dctx.strokeStyle=color; dctx.lineWidth=currentBrushSize*2.5;
+    dctx.strokeStyle=currentColor; dctx.lineWidth=currentBrushSize*2.5;
     dctx.beginPath();dctx.moveTo(lastX,lastY);dctx.lineTo(x,y);dctx.stroke();
     dctx.globalAlpha=1;
   } else if(currentBrushType==='glitter'){
     dctx.globalCompositeOperation='source-over';
-    const pal=PALETTES[currentPalette];
     const count=Math.ceil(currentBrushSize*1.8);
     for(let i=0;i<count;i++){
       const gx=x+(Math.random()-0.5)*currentBrushSize*2.8;
       const gy=y+(Math.random()-0.5)*currentBrushSize*2.8;
       const sz=0.8+Math.random()*3.5;
-      const col=currentPalette==='rainbow'?`hsl(${Math.random()*360},100%,60%)`:pal[Math.floor(Math.random()*pal.length)];
       dctx.globalAlpha=0.4+Math.random()*0.6;
-      dctx.fillStyle=col;
+      dctx.fillStyle=currentColor;
       if(Math.random()>0.4){dctx.beginPath();dctx.arc(gx,gy,sz,0,Math.PI*2);dctx.fill();}
       else{drawStar(dctx,gx,gy,sz*2,sz*0.8);}
     }
